@@ -1,5 +1,6 @@
 package com.jspapps.droneapp.domain.dto;
 
+import com.jspapps.droneapp.application.util.constant.DroneState;
 import com.jspapps.droneapp.application.util.constant.DroneType;
 import lombok.*;
 
@@ -8,9 +9,9 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class CreateDrone {
+@NoArgsConstructor
+public class DroneDTO {
 
     private String id;
     @NotNull
@@ -20,4 +21,5 @@ public class CreateDrone {
     @NotNull
     private Long weight;
     private Long battery;
+    private DroneState state;
 }
