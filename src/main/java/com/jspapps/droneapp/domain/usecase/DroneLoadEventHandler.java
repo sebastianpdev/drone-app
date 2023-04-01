@@ -2,7 +2,7 @@ package com.jspapps.droneapp.domain.usecase;
 
 import com.jspapps.droneapp.application.util.constant.DroneState;
 import com.jspapps.droneapp.domain.event.*;
-import com.jspapps.droneapp.domain.port.DeleteLoadDronePort;
+import com.jspapps.droneapp.domain.port.DeletePayloadDronePort;
 import com.jspapps.droneapp.domain.port.ListMedicationLoadPort;
 import com.jspapps.droneapp.domain.port.UpdateDronePort;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class DroneLoadEventHandler {
 
     private final ListMedicationLoadPort listMedicationLoadPort;
     private final UpdateDronePort updateDronePort;
-    private final DeleteLoadDronePort deleteLoadDronePort;
+    private final DeletePayloadDronePort deletePayloadDronePort;
 
     @EventListener
     public void listenerReviewDroneLoadEvent(ReviewDroneLoadEvent reviewDroneLoadEvent) {
@@ -108,6 +108,6 @@ public class DroneLoadEventHandler {
 
     @EventListener
     public void listenerIdleDroneEvent(IdleDroneEvent idleDroneEvent) {
-        deleteLoadDronePort.cleanLoadDeliveredByDrone(idleDroneEvent.getDroneId());
+        deletePayloadDronePort.cleanLoadDeliveredByDrone(idleDroneEvent.getDroneId());
     }
 }

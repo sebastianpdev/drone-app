@@ -1,6 +1,6 @@
 package com.jspapps.droneapp.domain.port;
 
-public interface DeleteLoadDronePort {
+public interface DeletePayloadDronePort {
 
     void cleanLoadDeliveredByDrone(String droneId);
 }

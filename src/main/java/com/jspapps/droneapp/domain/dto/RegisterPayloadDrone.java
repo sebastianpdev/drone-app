@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterLoadDrone {
+public class RegisterPayloadDrone {
 
     private String id;
     private String droneId;

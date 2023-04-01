@@ -2,8 +2,8 @@ package com.jspapps.droneapp.infraestructure.persistence.dao;
 
 import com.jspapps.droneapp.application.util.annotation.PersistenceAdapter;
 import com.jspapps.droneapp.application.util.constant.DroneState;
-import com.jspapps.droneapp.domain.dto.RegisterLoadDrone;
-import com.jspapps.droneapp.domain.port.CreateLoadDronePort;
+import com.jspapps.droneapp.domain.dto.RegisterPayloadDrone;
+import com.jspapps.droneapp.domain.port.CreatePayloadDronePort;
 import com.jspapps.droneapp.domain.port.ListDronePort;
 import com.jspapps.droneapp.infraestructure.persistence.DroneLoadRepository;
 import com.jspapps.droneapp.infraestructure.persistence.model.DroneLoad;
@@ -15,17 +15,17 @@ import java.util.List;
 
 @AllArgsConstructor
 @PersistenceAdapter
-public class CreateLoadDroneDAO implements CreateLoadDronePort {
+public class CreatePayloadDroneDAO implements CreatePayloadDronePort {
 
     private final ModelMapper modelMapper;
     private final ListDronePort listDronePort;
     private final DroneLoadRepository droneLoadRepository;
 
     @Override
-    public RegisterLoadDrone registerLoad(RegisterLoadDrone droneLoad) {
+    public RegisterPayloadDrone registerLoad(RegisterPayloadDrone droneLoad) {
         var newLoad = modelMapper.map(droneLoad, DroneLoad.class);
         newLoad = droneLoadRepository.saveAndFlush(newLoad);
-        return modelMapper.map(newLoad, RegisterLoadDrone.class);
+        return modelMapper.map(newLoad, RegisterPayloadDrone.class);
     }
 
     private boolean isEnableToLoad(DroneState droneState) {

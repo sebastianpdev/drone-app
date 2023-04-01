@@ -12,7 +12,7 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoadDrone {
+public class PayloadDroneRequest {
 
     @NotNull
     private String droneId;
