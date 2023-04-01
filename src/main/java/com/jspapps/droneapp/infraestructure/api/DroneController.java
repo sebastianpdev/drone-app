@@ -29,7 +29,7 @@ public class DroneController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping(value = "/v1/load", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/v1/load-medication", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> loadDrone(@RequestBody LoadDrone loadDrone) {
         createLoadDroneUseCase.registerLoad(loadDrone);
         return ResponseEntity.status(HttpStatus.OK).build();

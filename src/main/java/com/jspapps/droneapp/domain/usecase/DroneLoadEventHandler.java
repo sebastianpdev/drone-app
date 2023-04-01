@@ -2,6 +2,7 @@ package com.jspapps.droneapp.domain.usecase;
 
 import com.jspapps.droneapp.application.util.constant.DroneState;
 import com.jspapps.droneapp.domain.event.*;
+import com.jspapps.droneapp.domain.port.DeleteLoadDronePort;
 import com.jspapps.droneapp.domain.port.ListMedicationLoadPort;
 import com.jspapps.droneapp.domain.port.UpdateDronePort;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class DroneLoadEventHandler {
 
     private final ListMedicationLoadPort listMedicationLoadPort;
     private final UpdateDronePort updateDronePort;
+    private final DeleteLoadDronePort deleteLoadDronePort;
 
     @EventListener
     public void listenerReviewDroneLoadEvent(ReviewDroneLoadEvent reviewDroneLoadEvent) {
@@ -97,9 +99,15 @@ public class DroneLoadEventHandler {
 
             logger.log(Level.INFO, MessageFormat.format("---> Drone {0} is already, changing state to idle ...", returningDroneEvent.getDroneId()));
             updateDronePort.updateDroneState(returningDroneEvent.getDroneId(), DroneState.IDLE);
+            eventPublisher.publishEvent(new IdleDroneEvent(returningDroneEvent.getDroneId()));
 
         } catch (InterruptedException | DataAccessException exception ) {
             logger.log(Level.SEVERE, MessageFormat.format("An error ocurred on delivered drone event. {0}", exception.getMessage()));
         }
+    }
+
+    @EventListener
+    public void listenerIdleDroneEvent(IdleDroneEvent idleDroneEvent) {
+        deleteLoadDronePort.cleanLoadDeliveredByDrone(idleDroneEvent.getDroneId());
     }
 }

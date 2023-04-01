@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @AllArgsConstructor
@@ -29,6 +30,7 @@ public class CreateLoadDroneUseCase {
     private final ListMedicationPort listMedicationPort;
 
     public boolean registerLoad(LoadDrone load) {
+        logger.log(Level.INFO, MessageFormat.format("---> Trying register load to drone {0}", load.getDroneId()));
 
         if (load.getMedications().isEmpty()) {
             throw new RuntimeException("Medications list is empty.");
@@ -71,7 +73,7 @@ public class CreateLoadDroneUseCase {
         var currentMedicationWeightLoaded = listMedicationLoadPort.currentMedicationLoadByDrone(loadDrone.getDroneId());
         var totalWeight = currentMedicationWeightLoaded + totalMedicationWeight;
         if (validateMedicationWeight(totalWeight)) {
-            throw new RuntimeException(MessageFormat.format("The weight of medications list ({0}gr) is not allowed. Current load is {1}", totalWeight,
+            throw new RuntimeException(MessageFormat.format("The weight of medications list ({0}gr) is not allowed. Current load is {1}gr", totalWeight,
                     currentMedicationWeightLoaded));
         }
 

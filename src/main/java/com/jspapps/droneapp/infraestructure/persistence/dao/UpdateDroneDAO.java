@@ -19,4 +19,9 @@ public class UpdateDroneDAO implements UpdateDronePort {
     public int updateDroneState(String droneId, DroneState droneState) {
         return droneRepository.updateDroneState(droneId, droneState);
     }
+
+    @Override
+    public int updateDroneBatteryLevel(String droneId, Long batteryLevel) {
+        return droneRepository.updateBatteryLevel(batteryLevel, droneId);
+    }
 }

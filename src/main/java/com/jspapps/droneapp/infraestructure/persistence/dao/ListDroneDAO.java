@@ -7,6 +7,9 @@ import com.jspapps.droneapp.infraestructure.persistence.DroneRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 
+import java.util.Collections;
+import java.util.List;
+
 @AllArgsConstructor
 @PersistenceAdapter
 public class ListDroneDAO implements ListDronePort {
@@ -23,5 +26,10 @@ public class ListDroneDAO implements ListDronePort {
     public DroneDTO findDroneBySerial(String droneSerial) {
         var drone = droneRepository.findDroneBySerial(droneSerial).orElse(null);
         return modelMapper.map(drone, DroneDTO.class);
+    }
+
+    @Override
+    public List<DroneDTO> findLastDrone() {
+        return Collections.emptyList();
     }
 }
