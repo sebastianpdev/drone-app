@@ -28,6 +28,11 @@ public class CreatePayloadDroneDAO implements CreatePayloadDronePort {
         return modelMapper.map(newLoad, RegisterPayloadDrone.class);
     }
 
+    private boolean isBatteryLevelAvailable(String droneId) {
+        var drone = listDronePort.findDroneById(droneId);
+        return drone.getBattery() > 25L;
+    }
+
     private boolean isEnableToLoad(DroneState droneState) {
         return List.of(DroneState.IDLE, DroneState.LOADING).contains(droneState);
     }
@@ -37,6 +42,10 @@ public class CreatePayloadDroneDAO implements CreatePayloadDronePort {
         var drone = listDronePort.findDroneById(droneId);
         if (drone == null) {
             throw new RuntimeException("Drone not found.");
+        }
+
+        if (!isBatteryLevelAvailable(droneId)) {
+            throw new RuntimeException(MessageFormat.format("Drone is disable to load medication because battery level is {0}% and must be above 25%", drone.getBattery()));
         }
 
         var isDroneEnabled = isEnableToLoad(drone.getState());

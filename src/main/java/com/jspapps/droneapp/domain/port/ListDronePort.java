@@ -8,6 +8,6 @@ public interface ListDronePort {
 
     DroneDTO findDroneById(String droneId);
     DroneDTO findDroneBySerial(String droneSerial);
-    List<DroneDTO> findLastDrone();
+    List<DroneDTO> findAll();
 
 }

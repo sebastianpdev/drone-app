@@ -7,8 +7,8 @@ import com.jspapps.droneapp.infraestructure.persistence.DroneRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @PersistenceAdapter
@@ -29,7 +29,7 @@ public class ListDroneDAO implements ListDronePort {
     }
 
     @Override
-    public List<DroneDTO> findLastDrone() {
-        return Collections.emptyList();
+    public List<DroneDTO> findAll() {
+        return droneRepository.findAll().stream().map(d -> modelMapper.map(d, DroneDTO.class)).collect(Collectors.toList());
     }
 }
