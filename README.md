@@ -1,5 +1,13 @@
 # Drones App
 
+### About app
+Drone service capable of carrying medications. Each drone has a weight standard and states.
+* To simulate the progress of delivering and changes status, the ApplicationEventPublisher interface was used, which are
+executed in Multithreading.
+* To simulate drone battery discharge and check the battery level logs, Spring scheduled feature was used.
+* Clean Architecture design.
+
+
 ### Build and run application
 * To build this application use maven (my version is 3.8.4) with the commands:
 ``` 
