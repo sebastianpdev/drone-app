@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -27,4 +28,6 @@ public interface DroneRepository extends JpaRepository<Drone, String> {
     @Modifying
     @Query(value = "update Drone set battery = :batteryLevel where id = :droneId")
     int updateBatteryLevel(@Param("batteryLevel") Long batteryLevel, @Param("droneId") String droneId);
+
+    List<Drone> findAllByState(DroneState state);
 }

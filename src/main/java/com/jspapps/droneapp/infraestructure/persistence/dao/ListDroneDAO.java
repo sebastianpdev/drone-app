@@ -1,6 +1,7 @@
 package com.jspapps.droneapp.infraestructure.persistence.dao;
 
 import com.jspapps.droneapp.application.util.annotation.PersistenceAdapter;
+import com.jspapps.droneapp.application.util.constant.DroneState;
 import com.jspapps.droneapp.domain.dto.DroneDTO;
 import com.jspapps.droneapp.domain.port.ListDronePort;
 import com.jspapps.droneapp.infraestructure.persistence.DroneRepository;
@@ -31,5 +32,10 @@ public class ListDroneDAO implements ListDronePort {
     @Override
     public List<DroneDTO> findAll() {
         return droneRepository.findAll().stream().map(d -> modelMapper.map(d, DroneDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DroneDTO> findAllAvailable() {
+        return droneRepository.findAllByState(DroneState.LOADING).stream().map(d -> modelMapper.map(d, DroneDTO.class)).collect(Collectors.toList());
     }
 }
