@@ -1,5 +1,6 @@
 package com.jspapps.droneapp.infraestructure.persistence.dao;
 
+import com.jspapps.droneapp.application.exception.CustomRuntimeException;
 import com.jspapps.droneapp.application.util.RandomUUIDGenerator;
 import com.jspapps.droneapp.application.util.annotation.PersistenceAdapter;
 import com.jspapps.droneapp.application.util.constant.DroneState;
@@ -22,7 +23,7 @@ public class CreateDroneDAO implements CreateDronePort {
     public CreateDrone save(CreateDrone createDrone) {
         var droneStored = droneRepository.findDroneBySerial(createDrone.getSerial()).orElse(null);
         if (droneStored != null) {
-            throw new RuntimeException("Drone already exists by serial.");
+            throw new CustomRuntimeException("Drone already exists by serial.");
         }
 
         var newDrone = modelMapper.map(createDrone, Drone.class);

@@ -1,5 +1,6 @@
 package com.jspapps.droneapp.infraestructure.persistence.dao;
 
+import com.jspapps.droneapp.application.exception.CustomRuntimeException;
 import com.jspapps.droneapp.application.util.annotation.PersistenceAdapter;
 import com.jspapps.droneapp.application.util.constant.DroneState;
 import com.jspapps.droneapp.domain.dto.RegisterPayloadDrone;
@@ -41,16 +42,16 @@ public class CreatePayloadDroneDAO implements CreatePayloadDronePort {
     public void checkDroneToRegisterLoad(String droneId) {
         var drone = listDronePort.findDroneById(droneId);
         if (drone == null) {
-            throw new RuntimeException("Drone not found.");
+            throw new CustomRuntimeException("Drone not found.");
         }
 
         if (!isBatteryLevelAvailable(droneId)) {
-            throw new RuntimeException(MessageFormat.format("Drone is disable to load medication because battery level is {0}% and must be above 25%", drone.getBattery()));
+            throw new CustomRuntimeException(MessageFormat.format("Drone is disable to load medication because battery level is {0}% and must be above 25%", drone.getBattery()));
         }
 
         var isDroneEnabled = isEnableToLoad(drone.getState());
         if (!isDroneEnabled) {
-            throw new RuntimeException(MessageFormat.format("Drone is disable to load medications, status is {0}", drone.getState().toString()));
+            throw new CustomRuntimeException(MessageFormat.format("Drone is disable to load medications, status is {0}", drone.getState().toString()));
         }
     }
 }

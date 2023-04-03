@@ -1,5 +1,6 @@
 package com.jspapps.droneapp.domain.usecase;
 
+import com.jspapps.droneapp.application.exception.CustomRuntimeException;
 import com.jspapps.droneapp.application.util.RandomUUIDGenerator;
 import com.jspapps.droneapp.application.util.annotation.UseCase;
 import com.jspapps.droneapp.domain.dto.PayloadDroneRequest;
@@ -33,7 +34,7 @@ public class CreatePayloadDroneUseCase {
         logger.log(Level.INFO, MessageFormat.format("---> Trying register load to drone {0}", load.getDroneId()));
 
         if (load.getMedications().isEmpty()) {
-            throw new RuntimeException("Medications list is empty.");
+            throw new CustomRuntimeException("Medications list is empty.");
         }
 
         createPayloadDronePort.checkDroneToRegisterLoad(load.getDroneId());
@@ -67,13 +68,13 @@ public class CreatePayloadDroneUseCase {
         }
 
         if (validateMedicationWeight(totalMedicationWeight)) {
-            throw new RuntimeException(MessageFormat.format("The weight of medications list ({0}gr) is not allowed.", totalMedicationWeight));
+            throw new CustomRuntimeException(MessageFormat.format("The weight of medications list ({0}gr) is not allowed.", totalMedicationWeight));
         }
 
         var currentMedicationWeightLoaded = listMedicationLoadPort.currentMedicationLoadByDrone(payloadDroneRequest.getDroneId());
         var totalWeight = currentMedicationWeightLoaded + totalMedicationWeight;
         if (validateMedicationWeight(totalWeight)) {
-            throw new RuntimeException(MessageFormat.format("The weight of medications list ({0}gr) is not allowed. Current load is {1}gr", totalWeight,
+            throw new CustomRuntimeException(MessageFormat.format("The weight of medications list ({0}gr) is not allowed. Current load is {1}gr", totalWeight,
                     currentMedicationWeightLoaded));
         }
 
@@ -83,7 +84,7 @@ public class CreatePayloadDroneUseCase {
     private void checkLoadDroneMedicationsWeight(Map<String, Long> medications) {
         var medicationsWeight = listMedicationPort.sumMedicationsWeightByIds(medications.keySet());
         if (validateMedicationWeight(medicationsWeight)) {
-            throw new RuntimeException(MessageFormat.format("The weight of medications list ({0}gr) is not allowed.", medicationsWeight));
+            throw new CustomRuntimeException(MessageFormat.format("The weight of medications list ({0}gr) is not allowed.", medicationsWeight));
         }
     }
 

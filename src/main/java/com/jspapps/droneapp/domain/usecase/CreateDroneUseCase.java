@@ -1,5 +1,6 @@
 package com.jspapps.droneapp.domain.usecase;
 
+import com.jspapps.droneapp.application.exception.CustomRuntimeException;
 import com.jspapps.droneapp.application.util.annotation.UseCase;
 import com.jspapps.droneapp.domain.dto.CreateDrone;
 import com.jspapps.droneapp.domain.port.CreateDronePort;
@@ -13,7 +14,7 @@ public class CreateDroneUseCase {
 
     public void createDrone(CreateDrone drone) {
         if (drone.getId() != null) {
-            throw new RuntimeException("Drone id is not empty.");
+            throw new CustomRuntimeException("Drone id is not empty.");
         }
         createDronePort.save(drone);
     }
